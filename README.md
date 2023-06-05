@@ -24,12 +24,6 @@ The below is direct quotation from project email:
   * Please make sure your setup is in such a way that ports and other things are appropriately configured for the curl to work
   * Please fix any issues along the way as you see fit to be able to get the "Hello World" response via ingress
 
-## TODO
-
-* Summarize key takeaways of `/vendor` debate
-* Include kind multi-node cluster as a Helm manifest
-* Include nginx ingress controller as a Helm manifest
-
 ## Problems Identified in Original Repo
 
 * Go project uses deprecated `dep` tool. Needs to be refactored to `go mod` for maintainability.
@@ -46,4 +40,7 @@ The below is direct quotation from project email:
   * Refactored Dockerfile to accomodate changes in go proj.
   * Updated `/vendor`.
 
+* Ran out of time to detail helm issues and fixes. it functions.
+
 ## Evidence of Functioning Project
+* see screenshots in main repo
