@@ -38,7 +38,7 @@ The below is direct quotation from project email:
 ## Problems Identified in Original Repo
 
 * Go project uses deprecated `dep` tool. Needs to be refactored to `go mod` for maintainability.
-* Go project does not follow Go project layout conventions and sits `main.go` at repo root rather than within /cmd.
+* Go project does not follow Go project layout conventions and sits `main.go` at repo root rather than within `/cmd`.
 * Point for discussion on tradeoffs and potential refactor: [to `/vendor` or not to `/vendor` @HackerNews](https://news.ycombinator.com/item?id=36046662).
   * *Key Takeaways*:   
 
