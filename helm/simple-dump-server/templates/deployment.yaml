@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: simple-dump-server-deployment
+  namespace: test
   labels:
     app: simple-dump-server
     heritage: {{.Release.Service | quote}}
@@ -16,6 +17,7 @@ spec:
       app: simple-dump-server
   template:
     metadata:
+      namespace: test
       labels:
         heritage: {{.Release.Service | quote}}
         release: {{.Release.Name | quote}}
@@ -48,8 +50,6 @@ spec:
             initialDelaySeconds: 5
             # periodSeconds: 30
             timeoutSeconds: 10
-          resources:
-{{ toYaml .Values.resources | indent 10 }}
       restartPolicy: Always #check
       terminationGracePeriodSeconds: 30 #check
       dnsPolicy: ClusterFirst #check
