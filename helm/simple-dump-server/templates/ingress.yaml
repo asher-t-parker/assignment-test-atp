@@ -1,19 +1,37 @@
-{{- if .Values.ingress.class }}
-apiVersion: extensions/v1beta1
+
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: simple-dump-server
+  name: simple-dump-server-ingress
+  namespace: test
   labels:
     app: simple-dump-server
     heritage: {{.Release.Service | quote}}
     release: {{.Release.Name | quote}}
-    chart: {{ .Chart.Name }} 
+    chart: {{ .Chart.Name }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class | quote}}
+    nginx.ingress.kubernetes.io/secure-backends: "false"
+    {{- if eq .Values.ingress.affinity "cookie" }}
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+    {{- else if eq .Values.ingress.affinity "client-ip"}}
+    nginx.ingress.kubernetes.io/upstream-hash-by: "$the_real_ip"
+    {{- else if ne .Values.ingress.affinity ""}}
+    {{ required "invalid value for .Values.ingress.affinity" "" }}
+    {{- end }}
 spec:
+  tls:
+  - hosts:
+    -  192.168.0.1.nip.io
   rules:
-  - http:
+  - host:  192.168.0.1.nip.io
+    http:
       paths:
-      - path: "/pfpt"
-        backend:
-          serviceName: simple-dump-server
-          servicePort: 8080
-{{- end }}
+        - path: /pfpt/test200
+          pathType: Prefix
+          backend:
+            service: 
+              name: simple-dump-server
+              port: 
+                name: https

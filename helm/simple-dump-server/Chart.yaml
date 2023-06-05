@@ -1,3 +1,11 @@
-apiVersion: v1
-description: A simple http dump server
+apiVersion: v2
 name: simple-dump-server
+description: A simple http dump server, created by kousik93, updated by Asher T. Parker
+type: application 
+version: 0.1.0
+appVersion: 1.1.0
+sources: 
+- https://github.com/asher-t-parker/assignment-test-atp
+maintainers:
+- name: Asher T. Parker
+  url: https://github.com/asher-t-parker

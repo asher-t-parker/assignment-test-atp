@@ -26,12 +26,7 @@ The below is direct quotation from project email:
 
 ## TODO
 
-* Refactor go from `dep` to `go mod`
-* Refactor go dir structure to use conventional `main.go` in `/cmd`
-* Update imports to match fork and new dir structure
 * Summarize key takeaways of `/vendor` debate
-* Update `/vendor` if necessary
-* Refactor `Dockerfile` to match changes in go project structure
 * Include kind multi-node cluster as a Helm manifest
 * Include nginx ingress controller as a Helm manifest
 
@@ -43,5 +38,12 @@ The below is direct quotation from project email:
   * *Key Takeaways*:   
 
 ## Fixes
+
+* Go project:
+  * Refactored go proj to use `go mod`.
+  * Refactored go proj structure to follow `/cmd` convention.
+  * Refactored go proj imports to accomodate other updates.
+  * Refactored Dockerfile to accomodate changes in go proj.
+  * Updated `/vendor`.
 
 ## Evidence of Functioning Project

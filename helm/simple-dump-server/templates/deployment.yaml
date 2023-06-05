@@ -1,7 +1,8 @@
----
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: simple-dump-server-deployment
+  namespace: test
   labels:
     app: simple-dump-server
     heritage: {{.Release.Service | quote}}
@@ -9,13 +10,14 @@ metadata:
     chart: {{ .Chart.Name }}
   annotations:
     "service-version": {{ .Chart.AppVersion | quote }}
-  name: simple-dump-server
 spec:
+  replicas: {{ .Values.replicaCount }}
   selector:
-      matchLabels:
-        app: simple-dump-server
+    matchLabels:
+      app: simple-dump-server
   template:
     metadata:
+      namespace: test
       labels:
         heritage: {{.Release.Service | quote}}
         release: {{.Release.Name | quote}}
@@ -24,31 +26,31 @@ spec:
     spec:
       serviceAccountName: simple-dump-server
       containers:
-      - name: simple-dump-server
-        livenessProbe:
-          httpGet:
-            path: /healtha
-            port: 8008
-          initialDelaySeconds: 15
-          periodSeconds: 30
-          timeoutSeconds: 10      
-        readinessProbe:
-          httpGet:
-            path: /readya
-            port: 8008
-          initialDelaySeconds: 5
-          timeoutSeconds: 10
-          periodSeconds: 30
-        image: {{required ".Values.image.source is required" .Values.image.source }}       
-        ports:
-        - containerPort: 8008
-          protocol: TCP
-        terminationMessagePath: "/dev/termination-log"
-        terminationMessagePolicy: File
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        resources:
-{{ toYaml .Values.image.resources | indent 10 }}
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
+        - name: {{ .Chart.Name }}
+          #securityContext:
+          image: {{required ".Values.image.source is required" .Values.image.source }} # check this value
+          imagePullPolicy: {{ .Values.image.pullPolicy }} #check this value       
+          ports:
+            - name: http
+              containerPort: 8080 #check
+              protocol: TCP
+          terminationMessagePath: "/dev/termination-log"
+          terminationMessagePolicy: File
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 10      
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 5
+            # periodSeconds: 30
+            timeoutSeconds: 10
+      restartPolicy: Always #check
+      terminationGracePeriodSeconds: 30 #check
+      dnsPolicy: ClusterFirst #check
       securityContext: {}
