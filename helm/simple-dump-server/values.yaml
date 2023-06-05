@@ -1,13 +1,16 @@
+replicaCount: 1
+
 image:
   source: kousik93/simple-dump-server:assignment-test
   pullPolicy: IfNotPresent
-  resources:
-    limits:
-      cpu: "300m"
-      memory: "150Mi"
-    requests:
-      cpu: "200m"
-      memory: "100Mi"
+  
+resources:
+  limits:
+    cpu: "300m"
+    memory: "150Mi"
+  requests:
+    cpu: "200m"
+    memory: "100Mi"
 
 ingress:
   fqdn:
@@ -15,3 +18,24 @@ ingress:
   certSecretName:
   affinity: ''
 enableMonitoring: false
+
+# serviceAccount:
+#   # Specifies whether a service account should be created
+#   create: true
+#   # Annotations to add to the service account
+#   annotations: {}
+#   # The name of the service account to use.
+#   # If not set and create is true, a name is generated using the fullname ↵
+#     template
+#   name:
+
+# podSecurityContext: {}
+#   # fsGroup: 2000
+
+# securityContext: {}
+#   # capabilities:
+#   #   drop:
+#   #   - ALL
+#   # readOnlyRootFilesystem: true
+#   # runAsNonRoot: true
+#   # runAsUser: 1000
